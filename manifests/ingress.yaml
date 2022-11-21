@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pod-info-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1/info
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  tls:
+  - hosts:
+      - example.com
+    secretName: myssl
+  rules:
+    - host: example.com
+      http:
+        paths:
+          - path: /a
+            pathType: Prefix
+            backend:
+              service:
+                name: pod-info-service-a
+                port:
+                  number: 5000
+          - path: /b
+            pathType: Prefix
+            backend:
+              service:
+                name: pod-info-service-b
+                port:
+                  number: 5000

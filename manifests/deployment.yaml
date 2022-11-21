@@ -1,0 +1,94 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pod-info-service-a
+spec:
+  selector:
+    app: pod-info-app-a
+  ports:
+    - protocol: "TCP"
+      port: 5000
+      targetPort: 5000
+  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pod-info-service-b
+spec:
+  selector:
+    app: pod-info-app-b
+  ports:
+    - protocol: "TCP"
+      port: 5000
+      targetPort: 5000
+  type: LoadBalancer
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-info-app-a
+spec:
+  selector:
+    matchLabels:
+      app: pod-info-app-a
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pod-info-app-a
+    spec:
+      serviceAccountName: internal-kubectl
+      containers:
+        - name: pod-info-app-a
+          image: docker.io/mottysisam/pod-info:v4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-info-app-b
+spec:
+  selector:
+    matchLabels:
+      app: pod-info-app-b
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pod-info-app-b
+    spec:
+      serviceAccountName: internal-kubectl
+      containers:
+        - name: pod-info-app-b
+          image: docker.io/mottysisam/pod-info:v4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+
+
