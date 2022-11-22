@@ -18,7 +18,7 @@
 4. sudo ./k3s kubectl get nodes
 ```
 
-## 2. Patch manifests
+# 2. Patch manifests
 ```
 kubectl create: 
 - manifests/pod-read-role.yaml 
@@ -26,7 +26,7 @@ kubectl create:
 - manifests/ingress.yaml
 ```
 
-## 3. SSL Certs (Use certs in auth dir or create your own certs) 
+# 3. SSL Certs (Use certs in auth dir or create your own certs) 
 ```
 ** openssl genrsa -out s.key 2048
 ** openssl req -new -key s.key -out s.csr -subj "/CN=example.com"
@@ -34,12 +34,12 @@ kubectl create:
 - kubectl create secret tls myssl --cert s.crt --key s.key
 ```
 
-## 4. Make example.com available to localhost 
+# 4. Make example.com available to localhost 
 ```
 add example.com to /etc/hosts (127.0.0.1 example.com)
 ```
 
-## 4. Check your running service
+# 4. Check your running service
 ```
 - curl -k https://example.com/a 
 - curl -k https://example.com/b 
