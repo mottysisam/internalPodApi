@@ -39,7 +39,7 @@ kubectl create:
 add example.com to /etc/hosts (127.0.0.1 example.com)
 ```
 
-# 4. Check your running service
+# 5. Check your running service
 ```
 - curl -k https://example.com/a 
 - curl -k https://example.com/b 
