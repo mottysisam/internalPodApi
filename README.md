@@ -1,4 +1,11 @@
-# Internal Pod API
+# Internal Pod API in k8s written in Python/Flask/Docker
+
+This app exposes a simple API endpoint written in python in http://example.com:8080/info
+that exists on the cluster pod. 
+The pod runs a docker container includes alpine for running the flask/python app.
+
+
+
 - Quick Install - ✨Magic ✨
 
 # 1. Choose a Kube System (k3s / minikube) 
